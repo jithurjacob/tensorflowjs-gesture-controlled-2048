@@ -30,6 +30,7 @@ Webcam.prototype.capture = function () {
    * @param {Tensor4D} img An input image Tensor to crop.
    */
 Webcam.prototype.cropImage = function (img) {
+  return img.slice([0, 0, 0], [224, 224, 3]);
   const size = Math.min(img.shape[0], img.shape[1]);
   const centerHeight = img.shape[0] / 2;
   const beginHeight = centerHeight - (size / 2);

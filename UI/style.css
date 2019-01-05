@@ -5,9 +5,49 @@
 }
 .container{
     display: inline-block;
-    margin-left: 10%
+    margin-left: 10%;
+    float: left;
 }
 
 #no-webcam{
     display: none;
+}
+
+/* #container-2048{
+    display: none;
+} */
+
+.hyper-params{
+    display: none;
+}
+.training-panel{
+    width: 600px;
+    margin-top: 30px;
+}
+.panel-cell{
+    width: 200px;
+    display: inline-block;
+    float: left;
+}
+
+.button-panel{
+    margin: 20px 0px 20px 0px;
+    width: 500px;
+}
+
+.btn{
+    background: #bbada0;
+    padding: 10px 25px;
+    font-size: 25px;
+    height: 25px;
+    line-height: 47px;
+    /* font-weight: bold; */
+    border-radius: 3px;
+    color: white;
+    width: fit-content;
+    display: inline;
+}
+.btn:hover{
+    cursor: pointer;
+    background: #776E65;
 }

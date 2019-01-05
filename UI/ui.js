@@ -1,6 +1,6 @@
 
-const CONTROLS = ['up', 'down', 'left', 'right'];
-const CONTROL_CODES = [38, 40, 37, 39];
+const CONTROLS = ['up', 'down', 'left', 'right', 'noaction'];
+const CONTROL_CODES = [38, 40, 37, 39, -1];
 
 function UI_() {
   this.addExampleHandler;
@@ -17,6 +17,7 @@ function UI_() {
   this.downButton = document.getElementById('down');
   this.leftButton = document.getElementById('left');
   this.rightButton = document.getElementById('right');
+  this.noactionButton = document.getElementById('noaction');
 
   this.upButton.addEventListener('mousedown', () => this.handler(0));
   this.upButton.addEventListener('mouseup', () => mouseDown = false);
@@ -30,6 +31,9 @@ function UI_() {
   this.rightButton.addEventListener('mousedown', () => this.handler(3));
   this.rightButton.addEventListener('mouseup', () => mouseDown = false);
 
+  this.noactionButton.addEventListener('mousedown', () => this.handler(4));
+  this.noactionButton.addEventListener('mouseup', () => mouseDown = false);
+
 }
 
 
@@ -40,40 +44,42 @@ UI_.prototype.init = function () {
 
 
 // Set hyper params from UI values.
-UI_.prototype.getLearningRate = () => +this.learningRateElement.value;
-UI_.prototype.getBatchSizeFraction = () => +this.batchSizeFractionElement.value;
-UI_.prototype.getEpochs = () => +this.epochsElement.value;
-UI_.prototype.getDenseUnits = () => +this.denseUnitsElement.value;
+UI_.prototype.getLearningRate = function(){return +this.learningRateElement.value; }
+UI_.prototype.getBatchSizeFraction = function(){return +this.batchSizeFractionElement.value;}
+UI_.prototype.getEpochs = function(){return +this.epochsElement.value;}
+UI_.prototype.getDenseUnits = function(){ return +this.denseUnitsElement.value;}
 
-UI_.prototype.startPacman = () => {
-  google.pacman.startGameplay();
+UI_.prototype.startPacman = function() {
+  //google.pacman.startGameplay();
 }
 
-UI_.prototype.predictClass = (classId) => {
-  google.pacman.keyPressed(CONTROL_CODES[classId]);
-  document.body.setAttribute('data-active', CONTROLS[classId]);
+UI_.prototype.predictClass = function(classId)  {
+  console.log(classId);
+  this.statusElement.text = classId;
+  //google.pacman.keyPressed(CONTROL_CODES[classId]);
+  //document.body.setAttribute('data-active', CONTROLS[classId]);
 }
 
-UI_.prototype.isPredicting = () => {
+UI_.prototype.isPredicting = function() {
   this.statusElement.style.visibility = 'visible';
 }
-UI_.prototype.donePredicting = () => {
+UI_.prototype.donePredicting = function()  {
   this.statusElement.style.visibility = 'hidden';
 }
-UI_.prototype.trainStatus = (status) => {
+UI_.prototype.trainStatus = function(status) {
   this.trainStatusElement.innerText = status;
 }
 
 //export let addExampleHandler;
-UI_.prototype.setExampleHandler = (handler) => {
+UI_.prototype.setExampleHandler = function(handler)  {
   this.addExampleHandler = handler;
 }
 
 let mouseDown = false;
-const totals = [0, 0, 0, 0];
+const totals = [0, 0, 0, 0, 0];
 
 
-UI_.prototype.handler = async (label) => {
+UI_.prototype.handler = async function(label) {
   mouseDown = true;
   const className = CONTROLS[label];
   const button = document.getElementById(className);
