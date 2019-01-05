@@ -3,6 +3,7 @@
 <head>
 <title> 2048 </title>
 <link rel="stylesheet" type="text/css" href="2048.css">
+<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 <!--- 2048 taken from https://codepen.io/camsong/pen/wcKrg/ -->
@@ -13,6 +14,8 @@
     <div class="score-container">0</div>
   </div>
   <p class="game-intro">Join the numbers and get to the <strong>2048 tile!</strong></p>
+  <p id="no-webcam">No webcam found. <br/>
+      To use this demo, use a device with a webcam.</p>
 
   <div class="game-container">
     <div class="game-message">
@@ -62,7 +65,168 @@
   Created by <a href="http://gabrielecirulli.com" target="_blank">Gabriele Cirulli.</a> Based on <a href="https://itunes.apple.com/us/app/1024!/id823499224" target="_blank">1024 by Veewo Studio</a> and conceptually similar to <a href="http://asherv.com/threes/" target="_blank">Threes by Asher Vollmer.</a>
   </p>-->
 </div>
+<div class="gesture-container">
+  <div id="status">Loading mobilenet...</div>
+
+    <div class="webcam-box-inner">
+        <video autoplay playsinline muted id="webcam" width="224" height="224"></video>
+    </div>
+     <!-- Hyper params. -->
+        <div class="hyper-params">
+
+          <!-- Learning rate -->
+          <div class="dropdown">
+            <label>Learning rate</label>
+            <div class="select">
+              <select id="learningRate">
+                <option value="0.00001">0.00001</option>
+                <option selected value="0.0001">0.0001</option>
+                <option value="0.01">0.001</option>
+                <option value="0.03">0.003</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Batch size -->
+          <div class="dropdown">
+            <label>Batch size</label>
+            <div class="select">
+              <select id="batchSizeFraction">
+                <option value="0.05">0.05</option>
+                <option value="0.1">0.1</option>
+                <option selected value="0.4">0.4</option>
+                <option value="1">1</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Epochs -->
+          <div class="dropdown">
+            <label>Epochs</label>
+            <div class="select">
+              <select id="epochs">
+                <option value="10">10</option>
+                <option selected value="20">20</option>
+                <option value="40">40</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Hidden units -->
+          <div class="dropdown">
+            <label>Hidden units</label>
+            <div class="select">
+              <select id="dense-units">
+                <option value="10">10</option>
+                <option selected value="100">100</option>
+                <option value="200">200</option>
+              </select>
+            </div>
+          </div>
+
+        </div><!-- /.hyper-params -->
+
+  <div class="controller-panels" id="controller" >
+
+            <!---  <button class="record-button" id="up"><span>Add Sample</span></button>
+              <button class="record-button" id="left"><span>Add Sample</span></button>
+              <button class="record-button" id="right"><span>Add Sample</span></button>
+              <button class="record-button" id="down"><span>Add Sample</span></button>
+              -->
+</div>
+
+<div class="panel joystick-panel">
+
+      <div class="panel-row panel-row-top">
+
+        <div class="panel-cell panel-cell-center">
+          <div class="thumb-box">
+            <div class="thumb-box-outer">
+              <div class="thumb-box-inner">
+                <canvas class="thumb" width=224 height=224 id="up-thumb"></canvas>
+              </div>
+              <button class="record-button" id="up"/><span>Add Sample</span></button>
+            </div>
+            <p>
+              <span id="up-total">0</span> examples
+            </p>
+          </div>
+        </div><!-- ./panel-cell -->
+
+        <div class="panel-cell panel-cell-right panel-cell-fill">
+        </div><!-- ./panel-cell -->
+
+      </div><!-- /.panel-row -->
+      <div class="panel-row panel-row-middle">
+        <div class="panel-cell panel-cell-left">
+          <div class="thumb-box">
+            <div class="thumb-box-outer">
+              <div class="thumb-box-inner">
+                <canvas class="thumb" width=224 height=224 id="left-thumb"></canvas>
+              </div>
+              <button class="record-button" id="left"/><span>Add Sample</span></button>
+            </div>
+            <p>
+              <span id="left-total">0</span> examples
+            </p>
+          </div>
+        </div><!-- ./panel-cell -->
+
+        <div class="panel-cell panel-cell-center panel-cell-fill">
+          <img height="108" width="129" src="./images/joystick.png" />
+        </div><!-- ./panel-cell -->
+
+        <div class="panel-cell panel-cell-right">
+          <div class="thumb-box">
+            <div class="thumb-box-outer">
+              <div class="thumb-box-inner">
+                <canvas class="thumb" width=224 height=224 id="right-thumb"></canvas>
+              </div>
+              <button class="record-button" id="right"/><span>Add Sample</span></button>
+            </div>
+            <p>
+              <span id="right-total">0</span> examples
+            </p>
+          </div>
+        </div><!-- ./panel-cell -->
+
+      </div><!-- /.panel-row -->
+
+      <div class="panel-row panel-row-bottom">
+
+        <div class="panel-cell panel-cell-left panel-cell-fill">
+        </div><!-- ./panel-cell -->
+
+        <div class="panel-cell panel-cell-center">
+          <div class="thumb-box">
+            <div class="thumb-box-outer">
+              <div class="thumb-box-inner">
+                <canvas class="thumb" width=224 height=224 id="down-thumb"></canvas>
+              </div>
+              <button class="record-button" id="down"/><span>Add Sample</span></button>
+            </div>
+            <p>
+              <span id="down-total">0</span> examples
+            </p>
+          </div>
+        </div><!-- ./panel-cell -->
+
+        <div class="panel-cell panel-cell-right panel-cell-fill">
+        </div><!-- ./panel-cell -->
+
+      </div><!-- /.panel-row -->
+
+
+    </div><!-- /.panel -->
+
+
+</div>
 <script src="hammer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.14.1/dist/tf.min.js"></script>
 <script src="2048.js"></script>
+<script src="webcam.js"></script>
+<script src="controller_dataset.js"></script>
+<script src="ui.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
