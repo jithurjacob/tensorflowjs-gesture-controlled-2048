@@ -52,12 +52,20 @@ UI_.prototype.getDenseUnits = function(){ return +this.denseUnitsElement.value;}
 UI_.prototype.startPacman = function() {
   //google.pacman.startGameplay();
 }
-
-UI_.prototype.predictClass = function(classId)  {
+var key_map = {
+  0: 38, //UP
+  1: 40, //Down
+  2: 37, // Left
+  3: 39, //Right
+};
+UI_.prototype.predictClass = async function(classId)  {
   console.log(classId);
-  this.statusElement.text = classId;
+  this.trainStatus("Pressing " +CONTROLS[classId]);
+  // this.statusElement.text = classId;
   //google.pacman.keyPressed(CONTROL_CODES[classId]);
   //document.body.setAttribute('data-active', CONTROLS[classId]);
+  if(classId != 4)
+    document.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':key_map[classId]}));
 }
 
 UI_.prototype.isPredicting = function() {

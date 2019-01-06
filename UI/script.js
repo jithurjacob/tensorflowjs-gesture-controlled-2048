@@ -111,6 +111,8 @@ function wait(ms){
 async function predict() {
     ui.isPredicting();
     while (isPredicting) {
+      wait(2000);
+
       const predictedClass = tf.tidy(() => {
         // Capture the frame from the webcam.
         const img = webcam.capture();
@@ -132,8 +134,8 @@ async function predict() {
       predictedClass.dispose();
   
       ui.predictClass(classId);
+
       await tf.nextFrame();
-      wait(1000);
     }
     ui.donePredicting();
   }
